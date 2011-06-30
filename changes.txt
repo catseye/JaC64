@@ -1,0 +1,15 @@
+Changes for JaC64 since 1.0
+--------------------------------------------
+2008 January - 1.11
+- reimplemented CIA to be event driven
+- reimplemented SID to be 100% event driven
+- made it possible to switch between SID emulations
+- improved functionality of client version
+- added "hard" reset and reimplemented reset-handling
+
+2007 December - 1.1 Beta
+- integration of resid port by Ken Händel into JaC64
+- implemented client (desktop) version of JaC64 
+  (first released as v 1.1 Beta)
+- moved over SID emulation to be partly event-driven
+- fixed some minor bugs in VIC emulation

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: JaC64 Starter
+Specification-Vendor: JaC64.com
+Specification-Version: 1.0.0
+Implementation-Title: JaC64 Starter
+Implementation-Version: 1.0.0
+Implementation-Vendor: JaC64.com
+Sealed: true
+Main-Class: JaC64

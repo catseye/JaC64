@@ -1,0 +1,119 @@
+<html>
+<head>
+</head>
+<body >
+<h3>JaC64 Test page</h3>
+Thanks for trying JaC64, a 100% Java C64 emulator. You can find more
+information about JaC64 at
+<a href=http://www.jac64.com/>jac64.com</a>, and (old site)
+<a href=http://www.dreamfabric.com/c64/>dreamfabric</a>.
+
+If everything is working, you should see a running JaC64 below
+(and some instructions). <p>
+<b>Joakim Eriksson, joakim@jac64.com / joakim.eriksson@dreamfabric.com / joakime@sics.se</b>
+<p>
+<center id=center>&nbsp<applet id="c64" name="c64" code="C64Applet.class"
+archive="c64small.jar" WIDTH="768" HEIGHT ="568" MAYSCRIPT>
+<param name="soundOn" value="1">
+<param name="doubleScreen" value="1">
+<!-- <param name="autostartDisk" value="games/delta.t64"> -->
+<!-- <param name="autostartPGM" value=random>   <!--"DELTA.BIN"> -->
+<param name="extendedKeyboard" value="1">
+<param name="hotkey-f1" value='enterText("load \"$\",8~run~")'>
+<!-- <param name="autostartProgram" value="1"> -->
+</applet></center><br>
+<param name="autostartProgram" value="0">
+<a href="javascript:document.c64.reset()">Reset</a>,
+<a href="javascript:document.c64.setStick(0)">Joystick 0</a>,
+<a href="javascript:document.c64.setStick(1)">Joystick 1</a>,
+<a href="javascript:document.c64.setSoundOn(false)">Sound off</a>,
+<a href="javascript:document.c64.setSoundOn(true)">Sound on</a><br>
+<a href="javascript:document.c64.pause()">Pause</a>,
+<a href="javascript:document.c64.unpause()">unPause</a>,
+<a href="javascript:document.c64.poke(53280,1)">poke 53280,1</a>,
+<a href="javascript:document.c64.fullscreen(true)">Fullscreen</a><br>
+<a href="javascript:document.c64.loadGame(0)">Load Gorf</a>,
+<p>
+<a href="javascript:document.c64.loadGame(0)">Load Gorf</a>,
+<a href="javascript:document.c64.loadGame(1)">Load Blue Max</a>,
+<a href="javascript:document.c64.loadPGM('c64programs/Bonzieed.prg')">Load Demo</a>,
+<a href="javascript:document.c64.loadPGM('c64programs/jeroen_tel_music.prg')">Load Music</a>
+
+<a href="javascript:document.c64.insertDisk('c64programs/games1.d64')">Insert disk1</a>
+<a href="javascript:document.c64.insertDisk('c64programs/jac64d.d64')">Insert disk2</a>
+<a href="javascript:document.c64.enterText('load &#34$&#34,8~list~')">Load dir...</a>
+
+<a href="javascript:document.c64.setSIDEmulation(1)">Resid 6581</a>,
+<a href="javascript:document.c64.setSIDEmulation(2)">Resid 8581</a>,
+<a href="javascript:document.c64.setSIDEmulation(3)">JaC64 SID</a>,
+
+<h4>JaC64 Features and Known Bugs</h4>
+<b>Feature:</b>
+ <ul>
+    <li>CPU 6510, most of the 6510/02 instructions (inluding many undocumented)
+    <li>RAM/ROM and Bank Switching (ROM - on / off, IO on / off)
+    <li>Interrupts (IRQ, NMI) from raster, sprites, CIA timers, etc.
+    <li>VIC Graphics (text modes, hi-res, multicolor) - instruction/cycle
+based, sprites (normal, expanded, multicolor, collisions)
+   <li>SID (6581) Sound, with support for most of the SID features such as
+    3-oscillators/4 waveforms + mix, ADSR, synch., ring-mod, filters, etc.
+    <li>CIA - timers
+    <li>Keyboard & Joystick
+    <li>Support for .d64 .prg/p00 and .t64 files (directly into memory)
+    <li>Support for 1541 - e.g. loading .d64 files from an emulated
+    diskdrive
+    <li>New fullscreen mode activated/deactivated by pressing control-f12
+    </ul>
+<b>Known Bugs:</b>
+<ul>
+<li> VIC-II emulation is not yet 100% correct (see the demos/music here)
+<li> Some instruction are also not 100% correct (and/or interrupts handling)
+<li> SID is not 100% cycle correct
+</ul>
+
+<h4>Requirements to run the applet</h4>
+
+A JRE (1.4 or better) is required, and you need to have a folder
+ called "roms" with the rom files for the C64 for the applet to work.
+From version 1.0 Beta 3 this folder is no longer needed since the rom
+files are included in the jar file.
+
+<h4>Controlling the C64</h4>
+
+Joystick emulation:
+<ul>
+<li>Up: Numpad 8 or arrow up
+<li>Down: Numpad 5,2 or arrow down
+<li>Left: Numpad 4 or arrow left
+<li>Right: Numpad 6 or arrow right
+<li>Fire: Numpad 0 or shift
+</ul>
+
+Other important keys
+<ul>
+<li>ctrl-alt-backspace: resets the emulator
+<li>ctrl-f12: toggle fullscreen mode
+<li>ESC: run-stop
+</ul>
+
+
+
+
+<h4>Parameters to the applet</h4>
+<table>
+<tr><th>Parameter</th><th>Usage</th></tr>
+<tr><td>autostartDisk = URL/File</td><td>The disk/tape image to load file from</td></tr>
+<tr><td>autostartPGM = Filename</td><td>The file from the disk/tape image</td></tr>
+<tr><td>autostartProgram = file number</td><td>The file number (id) of the program in the games.txt file</td></tr>
+<tr><td>soundOn = 0/1</td><td>The status of sound (0 mutes applet)</td></tr>
+<tr><td>doubleScreen = 0/1</td><td>if set to 1 the emulator will be running
+in double size mode</td></tr>
+</table>
+
+<h4>Thanks to</h4>
+[2002] Jan Blok - reimplementation of memory model and fixing CPU bugs<br>
+[2006] Jörg Jahnke - help with refactoring of CPU class<br>
+[2006] ByteMaster of Cache64.com - extensive testing and bug reporting huge thanks!<br>
+
+</body>
+</html>
