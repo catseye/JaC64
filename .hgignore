@@ -1,2 +1,9 @@
-roms
-sounds
+syntax: regexp
+
+^roms/
+^sounds/
+
+syntax: glob
+
+*.class
+*.jar
