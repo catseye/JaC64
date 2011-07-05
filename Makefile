@@ -50,7 +50,7 @@ dknob:
 
 # Small(er) JaC64 Jarfile
 c64small.jar: $(OBJECTS)
-	jar cvf $@ com/dreamfabric/jac64/*.class C64Applet*.class sounds/motor.wav sounds/track.wav com/dreamfabric/c64utils/{AutoStore,C64Script}.class roms/*.* resid/*.class
+	jar cvf $@ com/dreamfabric/jac64/*.class C64Applet*.class com/dreamfabric/c64utils/AutoStore.class com/dreamfabric/c64utils/C64Script.class roms/*.* resid/*.class
 
 # JSIDPlay including GUI, etc.
 jsidplay.jar: $(OBJECTS_JSID)
