@@ -482,7 +482,6 @@ public class C64Reader {
       DataInputStream reader = new DataInputStream(stream);
       reader.readFully(start);
 
-
       int sector = 0;
       int numRead = 0;
       int noBytes = 0;
@@ -656,17 +655,19 @@ public class C64Reader {
       FileInputStream reader = new FileInputStream(name);
       return readDisk(reader);
     } catch (Exception e) {
-      System.out.println("Error while opening file " + name + "  " + e);
+      System.out.println("readDiskFromFile(filename): Error while opening file " + name + ":");
+      e.printStackTrace();
     }
     return false;
   }
 
   public boolean readPGM(URL url, int address) {
     try {
-      return readPGM(url.openConnection().getInputStream(), address);
+      InputStream s = url.openStream();
+      return readPGM(s, address);
     } catch (Exception e) {
-      System.out.println("Error when opening url " + url + "  " + e);
-
+      System.out.println("readPGM(url): Error when opening url " + url + ":");
+      e.printStackTrace();
     }
     return false;
   }
@@ -675,7 +676,8 @@ public class C64Reader {
     try {
       return readPGM(new FileInputStream(file), address);
     } catch (Exception e) {
-      System.out.println("Error when opening file " + file + "  " + e);
+      System.out.println("readPGM(filename): Error when opening file " + file + ":");
+      e.printStackTrace();
     }
     return false;
   }
@@ -686,7 +688,8 @@ public class C64Reader {
       InputStream reader = url.openConnection().getInputStream();
       return readDisk(reader);
     } catch (Exception e) {
-      System.out.println("Error when opening url " + url + "  " + e);
+      System.out.println("readDiskFromURL(url): Error when opening url " + url + ":");
+      e.printStackTrace();
     }
     return false;
   }
@@ -697,7 +700,8 @@ public class C64Reader {
       FileInputStream reader = new FileInputStream(name);
       return readTape(reader);
     } catch (Exception e) {
-      System.out.println("Error while opening file " + name + "  " + e);
+      System.out.println("readTapeFromFile(filename): Error while opening file " + name + ":");
+      e.printStackTrace();
     }
     return false;
   }
@@ -708,7 +712,8 @@ public class C64Reader {
       InputStream reader = url.openConnection().getInputStream();
       return readTape(reader);
     } catch (Exception e) {
-      System.out.println("Error when opening url " + url + "  " + e);
+      System.out.println("readTapeFromURL(url): Error when opening url " + url + ":");
+      e.printStackTrace();
     }
     return false;
   }
@@ -720,7 +725,8 @@ public class C64Reader {
       FileInputStream reader = new FileInputStream(name);
       return readSID(reader);
     } catch (Exception e) {
-      System.out.println("Error while opening file " + name + "  " + e);
+      System.out.println("readSIDFromFile(filename): Error while opening file " + name + ":");
+      e.printStackTrace();
     }
     return false;
   }
