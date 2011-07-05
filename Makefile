@@ -29,15 +29,11 @@ sid:    $(OBJECTS_JSID)
 
 compile: $(OBJECTS) $(OBJECTS_JSID)
 
-# Old CPU.java - new version use method calls...
-#com/dreamfabric/jac64/CPU.java: com/dreamfabric/jac64/CPU.java.m4 com/dreamfabric/jac64/cpuins.m4
-#	$(M4) $(M4ARGS) $< > $@
-
 jar:    jac64.jar
 
-smalljar:   c64small.jar
+smalljar: c64small.jar
 
-jac64.jar: $(OBJECTS)
+jac64.jar: compile $(OBJECTS)
 	jar cvfm $@ jac64manifest.txt com/dreamfabric/jac64/*.class JaC64*.class sounds/motor.wav sounds/track.wav com/dreamfabric/c64utils/{AutoStore,C64Script,Debugger}.class roms/*.* resid/*.class
 
 
@@ -49,7 +45,7 @@ dknob:
 	cp ../sicstools/courses/joakim/softsynth/com/dreamfabric/gui/DCheckBox.java com/dreamfabric/gui/
 
 # Small(er) JaC64 Jarfile
-c64small.jar: $(OBJECTS)
+c64small.jar: compile $(OBJECTS)
 	jar cvf $@ com/dreamfabric/jac64/*.class C64Applet*.class com/dreamfabric/c64utils/AutoStore.class com/dreamfabric/c64utils/C64Script.class roms/*.* resid/*.class
 
 # JSIDPlay including GUI, etc.
@@ -87,4 +83,4 @@ src: $(OBJECTS)
 ###############################################################
 
 clean:
-	rm -rf $(OBJECTS) $(OBJECTS_JSID) c64.jar c64small.jar
+	rm -rf *.class $(OBJECTS) $(OBJECTS_JSID) c64.jar c64small.jar
