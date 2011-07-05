@@ -23,6 +23,8 @@ public class AudioDriverSE extends AudioDriver {
   private boolean fullSpeed = false;
   
   public int available() {
+    if (dataLine == null)
+      return 0;
     return dataLine.available();
   }
 
@@ -31,6 +33,8 @@ public class AudioDriverSE extends AudioDriver {
   }
 
   public long getMicros() {
+    if (dataLine == null)
+      return 0;
     return dataLine.getMicrosecondPosition();
   }
 
@@ -76,6 +80,8 @@ public class AudioDriverSE extends AudioDriver {
   }
 
   public void write(byte[] buffer) {
+    if (dataLine == null)
+      return;
     int bsize = buffer.length;
     if (!fullSpeed) {
       while (dataLine.available() < bsize)
