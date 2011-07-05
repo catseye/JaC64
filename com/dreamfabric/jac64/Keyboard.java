@@ -1,4 +1,5 @@
 /**
+ * encoding: UTF-8
  * This file is a part of JaC64 - a Java C64 Emulator
  * Main Developer: Joakim Eriksson (Dreamfabric.com)
  * Contact: joakime@sics.se
@@ -42,10 +43,10 @@ public class Keyboard {
 
   public static final char[][] KEYMAPS = new char[][] {
     { 's','v',  // Keymap for language "sv"
-      ';', 'ö',
-      '\'','ä',
-      '[','å',
-      '`', '§',
+      ';', 'Ã¶',
+      '\'','Ã¤',
+      '[','Ã¥',
+      '`', 'Â§',
       '\\', (char) 222,
       '/', '-',
       ']', (char) 135,
@@ -53,9 +54,9 @@ public class Keyboard {
       '=', (char) 129
     },
     { 'd','e',  // Keymap for language "de"
-      ';', 'ö',
-      '\'','ä',
-      '[','ü',
+      ';', 'Ã¶',
+      '\'','Ã¤',
+      '[','Ã¼',
       '`', '^',
       '\\', (char) 520,
       '/', '-',

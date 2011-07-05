@@ -1,4 +1,5 @@
 /**
+ * encoding: UTF-8
  * This file is part of reSID, a MOS6581 SID emulator engine.
  * Copyright (C) 2004  Dag Lem <resid@nimrod.no>
  *
@@ -16,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
- * @author Ken Händel
+ * @author Ken HÃ¤ndel
  *
  */
 package resid;
@@ -121,7 +122,7 @@ import resid.ISIDDefs.chip_model;
  * ----------------------------------------------------------------------------
  * </pre>
  * 
- * @author Ken Händel
+ * @author Ken HÃ¤ndel
  */
 public class Filter {
 

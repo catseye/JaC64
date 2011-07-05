@@ -1,4 +1,5 @@
 /**
+ * encoding: UTF-8
  * JaC64 - Application for JaC64 emulator
  * A Swing UI for the JaC64 emulator for download to Java enabled
  * Desktop computers.
@@ -25,7 +26,7 @@ public class JaC64 implements ActionListener, KeyEventDispatcher {
   private static final String ABOUT_MESSAGE = 
     "JaC64 version: " + C64Screen.version + "\n" +
     "JaC64 is a Java-based C64 emulator by Joakim Eriksson\n" +
-    "The SID emulation use the resid Java port by Ken Händel\n\n" +
+    "The SID emulation use the resid Java port by Ken HÃ¤ndel\n\n" +
     "For more information see: http://www.jac64.com/";
 
   private C64Reader reader;

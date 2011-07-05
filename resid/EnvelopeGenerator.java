@@ -1,4 +1,5 @@
 /**
+ * encoding: UTF-8
  * This file is part of reSID, a MOS6581 SID emulator engine.
  * Copyright (C) 2004  Dag Lem <resid@nimrod.no>
  *
@@ -16,7 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  * 
- * @author Ken Händel
+ * @author Ken HÃ¤ndel
  *
  */
 package resid;
@@ -30,7 +31,7 @@ package resid;
  * period of this counter is set to 1, 2, 4, 8, 16, 30 at the envelope counter
  * values 255, 93, 54, 26, 14, 6, respectively.
  * 
- * @author Ken Händel
+ * @author Ken HÃ¤ndel
  * 
  */
 public class EnvelopeGenerator {
