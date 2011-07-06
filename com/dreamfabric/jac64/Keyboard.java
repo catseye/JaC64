@@ -71,7 +71,7 @@ public class Keyboard {
   boolean stickExits = false;
 
   int joystick1 = 255;
-  int bval;
+  int bval = 255;
   boolean lastUp = false;
   boolean lastLeft = false;
 
@@ -348,7 +348,7 @@ public class Keyboard {
     switch (usr) {
     // CHANGE TO STOCK1LEFT = true; (or similar!)
     case USER_UP:
-      joystick1 = joystick1 & 254;
+      joystick1 = joystick1 & (255 - STICK_UP);
       lastUp = true;
       if (stickExits) {
         updateKeyboard();
@@ -356,7 +356,7 @@ public class Keyboard {
       }
       break;
     case USER_DOWN:
-      joystick1 = joystick1 & 253;
+      joystick1 = joystick1 & (255 - STICK_DOWN);
       lastUp = false;
       if (stickExits) {
         updateKeyboard();
@@ -364,7 +364,7 @@ public class Keyboard {
       }
       break;
     case USER_LEFT:
-      joystick1 = joystick1 & 251;
+      joystick1 = joystick1 & (255 - STICK_LEFT);
       lastLeft = true;
       if (stickExits) {
         updateKeyboard();
@@ -372,7 +372,7 @@ public class Keyboard {
       }
       break;
     case USER_RIGHT:
-      joystick1 = joystick1 & (255 - 8);
+      joystick1 = joystick1 & (255 - STICK_RIGHT);
       lastLeft = false;
       if (stickExits) {
         updateKeyboard();
@@ -380,7 +380,7 @@ public class Keyboard {
       }
       break;
     case USER_FIRE:
-      joystick1 = joystick1 & (255 - 16);
+      joystick1 = joystick1 & (255 - STICK_FIRE);
       if (stickExits) {
         updateKeyboard();
         return;
@@ -605,8 +605,7 @@ public class Keyboard {
 
     // both left and rigth?
     if ((jst & STICK_LEFTRIGHT) == 0) {
-      jst = (jst | STICK_LEFTRIGHT) &
-      (0xff - (lastLeft ? STICK_LEFT : STICK_RIGHT));
+      jst = (jst | STICK_LEFTRIGHT) & (0xff - (lastLeft ? STICK_LEFT : STICK_RIGHT));
     }
 
     joy2 = stick == 0xdc00 + IO_OFFSET ? 0xff : jst;
