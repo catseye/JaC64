@@ -63,6 +63,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   // -------------------------------------------------------------------
 
   public void init() {
+    System.out.println("###### Applet init() #######");
     started = false;
     stopping = false;
     currentDisk = null;
@@ -222,8 +223,8 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
 	      enterText(autoText);
 	    }
 	  } else if (autostartProgram != null) {
-	      System.out.println("Autostart program:" + autostartProgram);
-	      if (files != null && autostartProgram.equals("random")) {
+	    System.out.println("Autostart program:" + autostartProgram);
+	    if (files != null && autostartProgram.equals("random")) {
 	      int randomId = (int) (Math.random() * (files.size() / 2));
 	      loadGame(randomId);
 	    } else {
@@ -241,7 +242,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void start() {
-    System.out.println("Starting applet...");
+    System.out.println("###### Applet start() #######");
 
     // Start the thread as late as possible so that other init is done
     // before!
@@ -260,7 +261,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void stop() {
-    System.out.println( "Status: stopping");
+    System.out.println("###### Applet stop() #######");
     stopping = true;
     cpu.stop();
     //pause();
@@ -270,7 +271,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void destroy() {
-    System.out.println("APPLET DESTROY CALLED");
+    System.out.println("###### Applet destroy() #######");
     screen.getAudioDriver().shutdown();
     cpu.stop();
     screen.motorSound(false);
@@ -476,7 +477,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
     while(!screen.ready()) {
       try {
 	Thread.sleep(100);
-      }catch (Exception e2) {
+      } catch (Exception e2) {
 	System.out.println("Exception while sleeping... C64Applet");
       }
     }
@@ -526,12 +527,18 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
 
   // Where should this be stored???
   public void saveFile(String name, String author, String description) {
+    String data = "";
     if (description == null)
       description = "";
-    String data = "name=" + URLEncoder.encode(name) +
-      "&description=" + URLEncoder.encode(description) +
-      "&author=" + URLEncoder.encode(author) +
-      "&file=" + reader.saveFile();
+    try {
+      data = "name=" + URLEncoder.encode(name, "UTF-8") +
+        "&description=" + URLEncoder.encode(description, "UTF-8") +
+        "&author=" + URLEncoder.encode(author, "UTF-8") +
+        "&file=" + reader.saveFile();
+    } catch (UnsupportedEncodingException uee) {
+      uee.printStackTrace();
+      return;
+    }
 
     System.out.println("Saving file: " + data);
 

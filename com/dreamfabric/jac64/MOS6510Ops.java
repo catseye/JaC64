@@ -346,7 +346,7 @@ public class MOS6510Ops {
     for (int j = 0, m = RMW_INS.length; j < m; j++) {
       if (RMW_INS[j] == i) return RMW;
     }
-    System.out.println("OP: " + i + " not found...");
+    //System.out.println("OP: " + i + " not found...");
     return 0;
   }
 
