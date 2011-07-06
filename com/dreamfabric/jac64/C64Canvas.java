@@ -107,7 +107,7 @@ public class C64Canvas extends JPanel implements KeyListener, FocusListener {
     keyboard.reset();
   }
 
-  public boolean isFocusTraversable() {
+  public boolean isFocusable() {
     // Allows the user to move the focus to the canvas
     // by pressing the tab key.
     return true;
