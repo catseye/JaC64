@@ -5,8 +5,6 @@
 #   javac - Java
 #   rm
 
-M4=m4
-M4ARGS=--prefix-builtins
 #CC = javac -target 1.3 -source 1.3
 CC = javac
 #CC = C:/jdk1.3.1_16/bin/javac
@@ -20,6 +18,12 @@ OBJECTS := $(patsubst %.java,%.class,$(wildcard $(addsuffix /*.java, $(JAC64PACK
 
 OBJECTS_JSID := $(patsubst %.java,%.class,$(wildcard *.java)) com/dreamfabric/gui/DKnob2.class com/dreamfabric/gui/DCheckBox.class $(patsubst %.java,%.class,$(wildcard $(addsuffix /*.java,. $(PACKAGES))))
 
+SOUNDS ?= sounds/motor.wav sounds/track.wav
+SMALLUTILS ?= com/dreamfabric/c64utils/AutoStore.class com/dreamfabric/c64utils/C64Script.class
+UTILS ?= $(SMALLUTILS) com/dreamfabric/c64utils/Debugger.class
+
+# Set this to include any other files you want in your jar
+EXTRAJARFILES ?=
 
 .PHONY:	compile
 
@@ -34,7 +38,11 @@ jar:    jac64.jar
 smalljar: c64small.jar
 
 jac64.jar: compile $(OBJECTS)
-	jar cvfm $@ jac64manifest.txt com/dreamfabric/jac64/*.class JaC64*.class sounds/motor.wav sounds/track.wav com/dreamfabric/c64utils/{AutoStore,C64Script,Debugger}.class roms/*.* resid/*.class
+	jar cvfm $@ jac64manifest.txt com/dreamfabric/jac64/*.class JaC64*.class $(UTILS) $(SOUNDS) roms/*.* resid/*.class $(EXTRAJARFILES)
+
+# Small(er) JaC64 Jarfile
+c64small.jar: compile $(OBJECTS)
+	jar cvf $@ com/dreamfabric/jac64/*.class C64Applet*.class $(SMALLUTILS) $(SOUNDS) roms/*.* resid/*.class $(EXTRAJARFILES)
 
 
 jogltest: SimpleJoglApp.class
@@ -43,10 +51,6 @@ jogltest: SimpleJoglApp.class
 dknob:
 	cp ../sicstools/courses/joakim/softsynth/com/dreamfabric/gui/DKnob2.java com/dreamfabric/gui/
 	cp ../sicstools/courses/joakim/softsynth/com/dreamfabric/gui/DCheckBox.java com/dreamfabric/gui/
-
-# Small(er) JaC64 Jarfile
-c64small.jar: compile $(OBJECTS)
-	jar cvf $@ com/dreamfabric/jac64/*.class C64Applet*.class com/dreamfabric/c64utils/AutoStore.class com/dreamfabric/c64utils/C64Script.class roms/*.* resid/*.class
 
 # JSIDPlay including GUI, etc.
 jsidplay.jar: $(OBJECTS_JSID)
