@@ -262,19 +262,26 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
 
   public void stop() {
     System.out.println("###### Applet stop() #######");
-    stopping = true;
-    cpu.stop();
-    //pause();
-    screen.motorSound(false);
-    cpu = null;
-    screen = null;
+    shutdown();
   }
 
   public void destroy() {
     System.out.println("###### Applet destroy() #######");
-    screen.getAudioDriver().shutdown();
-    cpu.stop();
-    screen.motorSound(false);
+    if (screen != null && screen.getAudioDriver() != null)
+        screen.getAudioDriver().shutdown();
+    shutdown();
+  }
+
+  private void shutdown() {
+    stopping = true;
+    if (cpu != null)
+        cpu.stop();
+    if (screen != null)
+        screen.motorSound(false);
+    cpu = null;
+    screen = null;
+    removeKeyListener(canvas);
+    canvas = null;
   }
 
   public boolean isStarted() {
