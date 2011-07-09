@@ -74,7 +74,7 @@ MouseMotionListener {
   private Color[] lites = new Color[LABEL_COUNT];
   private int colIndex = 0;
 
-  // This is the screen widht and height used...
+  // This is the screen width and height used...
   private final static int SC_WIDTH = 384; //403;
   private final static int SC_HEIGHT = 284;
   private final int SC_XOFFS = 32;
@@ -235,6 +235,11 @@ MouseMotionListener {
   boolean button1 = false;
   boolean button2 = false;
 
+  // This variable changes when Kernal has installed
+  // a working ISR that is reading the keyboard
+  private boolean isrRunning = false;
+  private int     ciaWrites = 0;
+
   public C64Screen(IMonitor m, boolean dob) {
     monitor = m;
     DOUBLE = dob;
@@ -334,7 +339,7 @@ MouseMotionListener {
   }
 
   public boolean ready() {
-    return keyboard.ready;
+    return isrRunning;
   }
 
   public void setDisplayFactor(double f) {
@@ -863,6 +868,14 @@ MouseMotionListener {
       // 		      " => ~" + ((~data) & 0xff));
       cia[0].performWrite(address + IO_OFFSET, data, cpu.cycles);
       keyboard.updateKeyboard();
+      if (!isrRunning) {
+        if (ciaWrites++ > 20) {
+          isrRunning = true;
+          ciaWrites = 0;
+        } else {
+          System.out.println("startup CIA write# " + ciaWrites + ": set " + address + " to " + data);
+        }
+      }
       break;
     case 0xdd00:
       if (DEBUG_IEC)
@@ -1740,6 +1753,8 @@ MouseMotionListener {
     cia[1].reset();
 //  c1541.reset();
     keyboard.reset();
+    ciaWrites = 0;
+    isrRunning = false;
 
     motorSound(false);
     resetInterrupts();

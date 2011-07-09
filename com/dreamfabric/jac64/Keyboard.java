@@ -82,10 +82,6 @@ public class Keyboard {
   private int keyPressed = 0;
   private int lastKey;
 
-  // This variable changes when CPU has "booted"
-  public boolean ready = false;
-  public int reads = 0;
-
   private C64Script c64script;
   private ArrayList hotkeyScript;
 
@@ -594,7 +590,7 @@ public class Keyboard {
     return (val & (cia.prb | ~(cia.ddrb))) & tmp;
   }
   
-  // This ensures some joystick stuff, etc.
+  // XXX This should really be called updateJoystick() now
   void updateKeyboard() {
 
     int jst = joystick1 & bval;
@@ -610,12 +606,6 @@ public class Keyboard {
 
     joy2 = stick == 0xdc00 + IO_OFFSET ? 0xff : jst;
     joy1 = stick == 0xdc00 + IO_OFFSET ? jst : 0xff;
-
-    if (!ready && (reads++ > 20)) {
-      ready = true;
-      reads = 0;
-//    System.out.println("CPU Ready");
-    }
   }
 
   public void reset() {
@@ -623,8 +613,6 @@ public class Keyboard {
     keyPressed = 0;
     keyShift = 0;
     joystick1 = 255;
-    reads = 0;
-    ready = false;
 
     for (int i = 0; i < 8; i++) {
       keyrow[i] = 255;
