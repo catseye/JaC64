@@ -219,7 +219,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
 	      loadGame(autostartDisk, autostartProgram);
 	    } else {
 	      insertDisk(autostartDisk);
-	      resetAndWait();
+              waitForKernal();
 	      enterText(autoText);
 	    }
 	  } else if (autostartProgram != null) {
@@ -443,7 +443,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void loadPGM(String pgm) {
-    resetAndWait();
+    waitForKernal();
     URL url = getResource(pgm);
     if (!reader.readPGM(url, -1))
       System.out.println("Status: problem while loading pgm");
@@ -471,7 +471,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void loadGame(String disk, String game) {
-    resetAndWait();
+    waitForKernal();
     System.out.println("Loading " + game + " from " + disk);
     // load program returns true if autostarting!
     if (!loadProgram(disk, game))
@@ -479,8 +479,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
     canvas.requestFocus();
   }
 
-  private void resetAndWait() {
-    cpu.reset();
+  private void waitForKernal() {
     while(!screen.ready()) {
       try {
 	Thread.sleep(100);
@@ -491,7 +490,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   }
 
   public void loadGame(int item) {
-    resetAndWait();
+    waitForKernal();
     // Does not always work....
     loadProgram(item);
     cpu.runBasic();
