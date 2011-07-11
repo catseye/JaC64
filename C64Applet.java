@@ -515,6 +515,7 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
   public void reset() {
     System.out.println("Reset - no kill");
     cpu.reset();
+    screen.reset();
     canvas.requestFocus();
   }
 
