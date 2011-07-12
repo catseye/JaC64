@@ -637,6 +637,8 @@ public class C64Reader {
     int no, numRead = 0;
     try {
       no = numRead = reader.read(sectors[sector]);
+      if (no == -1)
+        return numRead;
       while (numRead < 256) {
         no = reader.read(sectors[sector], numRead, 256 - numRead);
         if (no == -1)
@@ -645,6 +647,7 @@ public class C64Reader {
       }
     } catch(Exception e) {
       System.out.println("Exception while reading file... " + e);
+      e.printStackTrace();
     }
     return numRead;
   }
