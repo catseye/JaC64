@@ -48,6 +48,10 @@ public abstract class ExtChip {
     im = (InterruptManager) managers.get(cpu.getName());
   }
 
+  public void deleteInterruptManagers() {
+    managers = new Hashtable<String, InterruptManager>();
+  }
+
   public int getNMIFlags() {
     return im.nmiFlags;
   }

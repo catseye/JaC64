@@ -276,8 +276,10 @@ public class C64Applet extends Applet implements Runnable, PatchListener {
     stopping = true;
     if (cpu != null)
         cpu.stop();
-    if (screen != null)
+    if (screen != null) {
+        screen.deleteInterruptManagers();
         screen.motorSound(false);
+    }
     cpu = null;
     screen = null;
     removeKeyListener(canvas);
