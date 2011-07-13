@@ -867,7 +867,6 @@ MouseMotionListener {
       // 		      Integer.toString(address - ,16) + " = " + data +
       // 		      " => ~" + ((~data) & 0xff));
       cia[0].performWrite(address + IO_OFFSET, data, cpu.cycles);
-      keyboard.updateKeyboard();
       if (!isrRunning) {
         if (ciaWrites++ > 20) {
           isrRunning = true;

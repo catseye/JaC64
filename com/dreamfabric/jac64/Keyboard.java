@@ -346,39 +346,39 @@ public class Keyboard {
     case USER_UP:
       joystick1 = joystick1 & (255 - STICK_UP);
       lastUp = true;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_DOWN:
       joystick1 = joystick1 & (255 - STICK_DOWN);
       lastUp = false;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_LEFT:
       joystick1 = joystick1 & (255 - STICK_LEFT);
       lastLeft = true;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_RIGHT:
       joystick1 = joystick1 & (255 - STICK_RIGHT);
       lastLeft = false;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_FIRE:
       joystick1 = joystick1 & (255 - STICK_FIRE);
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
@@ -412,13 +412,11 @@ public class Keyboard {
         keyShift++;
       }
       handleKeyPress(key, location);
-      updateKeyboard();
 
     } else {
       // No autoshift keys!!!
       if (keytable[key][2] < MIN_AUTO) {
         handleKeyPress(key, location);
-        updateKeyboard();
       }
     }
   }
@@ -451,36 +449,36 @@ public class Keyboard {
     switch (usr) {
     case USER_UP:
       joystick1 = joystick1 | STICK_UP;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_DOWN:
       joystick1 = joystick1 | STICK_DOWN;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_LEFT:
       joystick1 = joystick1 | STICK_LEFT;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_RIGHT:
       joystick1 = joystick1 | STICK_RIGHT;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
     case USER_FIRE:
       joystick1 = joystick1 | STICK_FIRE;
+      updateJoystick();
       if (stickExits) {
-        updateKeyboard();
         return;
       }
       break;
@@ -545,8 +543,6 @@ public class Keyboard {
       keyrow[maprow] = keyrow[maprow] | (1 << keytable[key][1]);
       keycol[mapcol] = keycol[mapcol] | (1 << keytable[key][0]);
     }
-
-    updateKeyboard();
   }
 
   int readDC00(int pc) {
@@ -569,7 +565,7 @@ public class Keyboard {
 
   void setButtonval(int bval) {
     this.bval = bval;
-    updateKeyboard();
+    updateJoystick();
   }
 
   int readDC01(int pc) {
@@ -590,8 +586,8 @@ public class Keyboard {
     return (val & (cia.prb | ~(cia.ddrb))) & tmp;
   }
   
-  // XXX This should really be called updateJoystick() now
-  void updateKeyboard() {
+  /* Updates $DC00/$DC01 based on recent joystick activity. */
+  private void updateJoystick() {
 
     int jst = joystick1 & bval;
     // both up and down?
