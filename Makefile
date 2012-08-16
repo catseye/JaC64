@@ -6,7 +6,7 @@
 #   rm
 
 #CC = javac -target 1.3 -source 1.3
-CC = javac
+CC = javac -encoding UTF-8
 #CC = C:/jdk1.3.1_16/bin/javac
 #CC = C:/j2sdk1.4.2_10/bin/javac -target 1.3 -source 1.3
 CCARGS=-deprecation
