@@ -20,7 +20,6 @@ import java.util.*;
 import java.io.*;
 import com.dreamfabric.jac64.*;
 import com.dreamfabric.c64utils.*;
-import com.sun.image.codec.jpeg.*;
 
 
 /**
@@ -55,7 +54,6 @@ public class C64Test implements ActionListener, Runnable {
   private JButton save;
   private JButton vicdump;
   private JButton color;
-  private JButton snap;
   private JButton saveDisk;
   private JButton openAssembler;
 
@@ -254,9 +252,6 @@ public class C64Test implements ActionListener, Runnable {
     pan.add(prefix = new JTextField(""));
     prefix.addActionListener(this);
 
-    pan.add(snap = new JButton("Snap"));
-    snap.addActionListener(this);
-
     pan.add(file = new JTextField(""));
 
     pan.add(openAssembler = new JButton("Jasm64"));
@@ -446,8 +441,6 @@ public class C64Test implements ActionListener, Runnable {
     } else if (e.getSource() == debug) {
       monitor.setEnabled(debug.isSelected());
       debug.setText("debug:"+(debug.isSelected() ? "true":"false"));
-    } else if (e.getSource() == snap) {
-      saveSnapshotJPEG(file.getText());
     } else if (e.getActionCommand().startsWith("Res")) {
       System.out.println("Reset!");
       cpu.reset();
@@ -594,29 +587,6 @@ public class C64Test implements ActionListener, Runnable {
       }
     }
   }
-
-  public void saveSnapshotJPEG(String filename) {
-    JPanel myComponent = scr.getScreen();
-    Dimension size = myComponent.getSize();
-    BufferedImage myImage =
-      new BufferedImage(size.width / 4, size.height / 4,
-			BufferedImage.TYPE_INT_RGB);
-    Graphics2D g2 = myImage.createGraphics();
-    g2.addRenderingHints(AALIAS);
-    g2.scale(0.25,0.25);
-    myComponent.paint(g2);
-    try {
-      System.out.println("Saving JPG snapshot...");
-      OutputStream out = new FileOutputStream(filename);
-      JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-      encoder.encode(myImage);
-      out.close();
-      System.out.println("finished...");
-    } catch (Exception e) {
-      System.out.println(e);
-    }
-  }
-
 
   public void toggleFullScreen() {
     System.out.println("Toggle fullscreen called!");
