@@ -39,7 +39,7 @@ jar:    jac64.jar
 smalljar: c64small.jar
 
 jac64.jar: compile $(OBJECTS)
-	jar cvfm $@ jac64manifest.txt com/dreamfabric/jac64/*.class JaC64*.class $(UTILS) $(SOUNDS) roms/*.* resid/*.class $(EXTRAJARFILES)
+	jar cvfm $@ JaC64Manifest.txt com/dreamfabric/jac64/*.class JaC64*.class $(UTILS) $(SOUNDS) roms/*.* resid/*.class $(EXTRAJARFILES)
 
 # Small(er) JaC64 Jarfile
 c64small.jar: compile $(OBJECTS)
