@@ -292,9 +292,45 @@ public class JaC64 implements ActionListener, KeyEventDispatcher {
 //     fullscreen = full;
   }
 
+  private void waitForKernal() {
+    while(!scr.ready()) {
+      try {
+	Thread.sleep(100);
+      } catch (Exception e2) {
+	System.out.println("Exception while sleeping...");
+      }
+    }
+  }
 
-  public static void main(String[] name) {
-    JaC64 test = new JaC64();
-    test.cpu.start();
+  private void autoStart(String filename) {
+    Thread t = new Thread(new Runnable() {
+      public void run() {
+        waitForKernal();
+        System.out.println("Kernal READY!");
+        readDisk(filename);
+      }
+    });
+    t.start();
+  }
+
+  public static void main(String[] args) {
+    String autostart = null;
+
+    for (int i = 0; i < args.length; i++) {
+      if (args[i].equals("-a")) {
+        i++;
+        autostart = args[i];
+      } else {
+        System.out.println("Usage: java [-cp <classpath>] JaC64 [-a <autostart(.d64|.t64|.prg|.p00)>]");
+        System.exit(1);
+      }
+    }
+
+    JaC64 emu = new JaC64();
+    if (autostart != null) {
+      emu.autoStart(autostart);
+    }
+
+    emu.cpu.start();
   }
 }
