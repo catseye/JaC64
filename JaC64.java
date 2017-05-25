@@ -255,6 +255,7 @@ public class JaC64 implements ActionListener, KeyEventDispatcher {
 
   private boolean readDisk(String name) {
     System.out.println("READING FROM: " + name);
+
     if ((name.toLowerCase()).endsWith(".d64"))
       reader.readDiskFromFile(name);
     else if ((name.toLowerCase()).endsWith(".t64"))
@@ -275,6 +276,37 @@ public class JaC64 implements ActionListener, KeyEventDispatcher {
         }
       }
       reader.readPGM(name, -1);
+      cpu.runBasic();
+      return true;
+    }
+    return false;
+  }
+
+  private boolean readDisk(URL url) {
+    String name = url.toString();
+
+    System.out.println("READING FROM URL: " + name);
+
+    if ((name.toLowerCase()).endsWith(".d64"))
+      reader.readDiskFromURL(url);
+    else if ((name.toLowerCase()).endsWith(".t64"))
+      reader.readTapeFromURL(url);
+    else if (name.toLowerCase().endsWith(".prg") ||
+             name.toLowerCase().endsWith(".p00")) {
+      cpu.reset();
+      try {
+        Thread.sleep(10);
+      }catch (Exception e2) {
+        System.out.println("Exception while sleeping...");
+      }
+      while(!scr.ready()) {
+        try {
+          Thread.sleep(100);
+        }catch (Exception e2) {
+          System.out.println("Exception while sleeping...");
+        }
+      }
+      reader.readPGM(url, -1);
       cpu.runBasic();
       return true;
     }
@@ -307,7 +339,12 @@ public class JaC64 implements ActionListener, KeyEventDispatcher {
       public void run() {
         waitForKernal();
         System.out.println("Kernal READY!");
-        readDisk(filename);
+        URL url = getClass().getResource(filename);
+        if (url != null) {
+          readDisk(url);
+        } else {
+          readDisk(filename);
+        }
       }
     });
     t.start();
