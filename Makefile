@@ -56,7 +56,7 @@ jsidlib.jar: $(OBJECTS_JSID)
 
 zip:	jac64.zip
 jac64.zip: c64small.jar index_jac64.html
-	zip -r jac64.zip c64small.jar $(DEMOFILES) index_jac64.html 
+	zip -r jac64.zip c64small.jar $(DEMOFILES) index_jac64.html
 
 src: $(OBJECTS)
 	zip -r jac64src.zip C64Test.java C64Applet.java com/dreamfabric/jac64/*.java com/dreamfabric/c64utils/*.java \
